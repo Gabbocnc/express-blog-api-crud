@@ -7,7 +7,7 @@ Testare le rotte tramite Postman. */
 
 const express = require('express')
 const app = express()
-const myRoutes = require('./routes/route.js')
+const myRoutes = require('./routes/post.js')
 
 app.use(express.json());
 
