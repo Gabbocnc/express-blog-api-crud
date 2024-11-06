@@ -17,7 +17,7 @@ const update = (req,res) => {
     const post = myPost.find(post => post.title.toLocaleLowerCase() === req.params.title)
 
     if(!post){
-        res.status(404).json({
+        return res.status(404).json({
             error : 'no post found with that title'
         })
     }
@@ -36,15 +36,28 @@ const update = (req,res) => {
 }
 
 
+const destroy = (req,res) =>{
+    const post = myPost.filter(post => post.title.toLocaleLowerCase() !== req.params.title)
 
+    if (!post){
+        return res.status(404).json({
+            error : ' no corresponding post found'
+        })
+    }
 
+    const newPost = myPost.filter(post.title.toLocaleLowerCase() !== req.params.title)
 
+    fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`)
 
+    res.json({
+        status : 200,
+        data : newPost
+    })
 
-
-
+}
 
 module.exports = {
     store,
-    update
+    update,
+    destroy
 }
