@@ -16,7 +16,7 @@ const store = (req,res) =>{
 
 const update = (req,res) => {
     
-    const post = myPost.find(post => post.title.toLocaleLowerCase() === req.params.title)
+    const post = myPost.find(post => post.slug.toLocaleLowerCase() === req.params.slug)
  
     
 
@@ -44,8 +44,12 @@ const update = (req,res) => {
 const destroy = (req,res) =>{
     
     const post = myPost.filter(post => {
+        console.log("Post")
         console.log(post);
-        console.log(req.params)
+        console.log("Params")
+        console.log(req.params) 
+        
+        
         return post.slug.toLowerCase() !== req.params.slug.toLowerCase()
 
     })
