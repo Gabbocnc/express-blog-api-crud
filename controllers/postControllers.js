@@ -42,8 +42,13 @@ const update = (req,res) => {
 
 
 const destroy = (req,res) =>{
-    console.log(req.params);
-    const post = myPost.filter(post => post.slug.toLowerCase() !== req.params.slug.toLowerCase())
+    
+    const post = myPost.filter(post => {
+        console.log(post);
+        console.log(req.params)
+        return post.slug.toLowerCase() !== req.params.slug.toLowerCase()
+
+    })
 
     if (!post){
         return res.status(404).json({
