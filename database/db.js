@@ -80,5 +80,5 @@ module.exports = [
             "Ricette veloci",
             "Ricette vegetariane"
         ]
-    }
+    },
 ]

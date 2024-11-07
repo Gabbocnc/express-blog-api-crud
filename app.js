@@ -8,13 +8,32 @@ Testare le rotte tramite Postman. */
 const express = require('express')
 const app = express()
 const myRoutes = require('./routes/post.js')
+const notFoundMiddleware = require('./middlewares/notFound.js')
+const loggerMiddleware = require('./middlewares/loggerMiddleware.js')
+
 
 app.use(express.json());
 
+/* app.use('/post', (req,res,next)=>{
+    throw new Error('You broke everything!💥')
+}) */
+
+app.use('/post', loggerMiddleware);
+app.use('/', myRoutes);
+app.use(notFoundMiddleware)
+
+/* app.use((err,req,res,next)=>{
+    console.log('Error :', err.message);
+    console.error(err.stack);
+    res.status(500).send({
+        message : 'Somethin went wrong',
+        error: err.message
+    })
+})
+
+ */
 
 app.listen(3004, () => {
     console.log('Server started on port 3004 ');
     
 })
-
-app.use('/', myRoutes);

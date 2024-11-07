@@ -6,6 +6,7 @@ const store = (req,res) =>{
         data: req.body.data
     }
     myPost.push(newPost)
+
     fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`)
 
     res.json({
@@ -14,6 +15,7 @@ const store = (req,res) =>{
 }
 
 const update = (req,res) => {
+
     const post = myPost.find(post => post.title.toLocaleLowerCase() === req.params.title)
 
     if(!post){
@@ -21,6 +23,7 @@ const update = (req,res) => {
             error : 'no post found with that title'
         })
     }
+
     post.title = req.body.title
     post.slug = req.body.slug
     post.content = req.body.content
@@ -37,6 +40,7 @@ const update = (req,res) => {
 
 
 const destroy = (req,res) =>{
+    
     const post = myPost.filter(post => post.title.toLocaleLowerCase() !== req.params.title)
 
     if (!post){
