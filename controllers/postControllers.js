@@ -3,14 +3,14 @@ const fs = require('fs')
 
 const store = (req,res) =>{
     const newPost = {
-        data: req.body.data
+        ...req.body
     }
     myPost.push(newPost)
 
     fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`)
 
     res.json({
-        data: req.body
+        Post : newPost
     })
 }
 
@@ -41,7 +41,7 @@ const update = (req,res) => {
 
 const destroy = (req,res) =>{
     
-    const post = myPost.filter(post => post.title.toLocaleLowerCase() !== req.params.title)
+    const post = myPost.filter(post => post.slug.toLowerCase() !== req.params.slug.toLowerCase())
 
     if (!post){
         return res.status(404).json({
@@ -49,7 +49,7 @@ const destroy = (req,res) =>{
         })
     }
 
-    const newPost = myPost.filter(post.title.toLocaleLowerCase() !== req.params.title)
+    const newPost = myPost.filter(post => post.slug.toLowerCase() !== req.params.slug.toLowerCase())
 
     fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`)
 

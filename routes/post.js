@@ -1,9 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const postsController = require('../controllers/postControllers.js');
+const myPost = require('../database/db.js')
+
+
+
 
 router.post('/', postsController.store);
-router.put('/:id', postsController.update);
-router.delete('/:id', postsController.destroy);
+router.put('/:slug', postsController.update);
+router.delete('/:slug', postsController.destroy);
+router.get('/',(req,res)=>{
+    res.json(myPost)
+})
 
 module.exports = router
