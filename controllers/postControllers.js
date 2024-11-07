@@ -15,8 +15,10 @@ const store = (req,res) =>{
 }
 
 const update = (req,res) => {
-
+    
     const post = myPost.find(post => post.title.toLocaleLowerCase() === req.params.title)
+ 
+    
 
     if(!post){
         return res.status(404).json({
@@ -40,7 +42,7 @@ const update = (req,res) => {
 
 
 const destroy = (req,res) =>{
-    
+    console.log(req.params);
     const post = myPost.filter(post => post.slug.toLowerCase() !== req.params.slug.toLowerCase())
 
     if (!post){
