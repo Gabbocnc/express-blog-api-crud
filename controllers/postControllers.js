@@ -53,7 +53,10 @@ const destroy = (req, res) => {
     fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`);
 
 
-    res.json({ status: 200, message: 'Post deleted successfully' });
+    res.json({
+        status: 200,
+        message: 'Post deleted successfully',
+    });
 };
 
 
