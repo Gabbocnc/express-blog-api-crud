@@ -6,33 +6,24 @@ Tutte le funzioni delle rotte dovranno essere scritte nel controller dedicato.
 Testare le rotte tramite Postman. */
 
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const myRoutes = require('./routes/post.js')
 const notFoundMiddleware = require('./middlewares/notFound.js')
 const loggerMiddleware = require('./middlewares/loggerMiddleware.js')
-const cors = require('cors')
 
+
+app.use(cors())
+
+app.use('/post', loggerMiddleware);
 
 app.use(express.json());
 
-/* app.use('/post', (req,res,next)=>{
-    throw new Error('You broke everything!💥')
-}) */
 
-app.use('/post', loggerMiddleware);
 app.use('/', myRoutes);
-app.use(notFoundMiddleware)
-app.use(cors())
-/* app.use((err,req,res,next)=>{
-    console.log('Error :', err.message);
-    console.error(err.stack);
-    res.status(500).send({
-        message : 'Somethin went wrong',
-        error: err.message
-    })
-})
 
- */
+app.use(notFoundMiddleware)
+
 
 app.listen(3004, () => {
     console.log('Server started on port 3004 ');

@@ -1,7 +1,7 @@
 const myPost = require('../database/db.js')
 const fs = require('fs')
 
-const store = (req,res) =>{
+const store = (req, res) => {
     const newPost = {
         ...req.body
     }
@@ -10,19 +10,19 @@ const store = (req,res) =>{
     fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`)
 
     res.json({
-        Post : newPost
+        Post: newPost
     })
 }
 
-const update = (req,res) => {
-    
-    const post = myPost.find(post => post.slug.toLocaleLowerCase() === req.params.slug)
- 
-    
+const update = (req, res) => {
 
-    if(!post){
+    const post = myPost.find(post => post.slug.toLocaleLowerCase() === req.params.slug)
+
+
+
+    if (!post) {
         return res.status(404).json({
-            error : 'no post found with that title'
+            error: 'no post found with that title'
         })
     }
 
@@ -35,41 +35,27 @@ const update = (req,res) => {
     fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`)
 
     res.status(200).json({
-        status : 200,
-        data : post
+        status: 200,
+        data: post
     })
 }
 
 
-const destroy = (req,res) =>{
-    
-    const post = myPost.filter(post => {
-        console.log("Post")
-        console.log(post);
-        console.log("Params")
-        console.log(req.params) 
-        
-        
-        return post.slug.toLowerCase() !== req.params.slug.toLowerCase()
+const destroy = (req, res) => {
+    const slugToDelete = req.params.slug.toLowerCase();
+    console.log(slugToDelete);
 
-    })
+    const postIndex = myPost.data.findIndex(post => post.slug.toLowerCase() === slugToDelete);
 
-    if (!post){
-        return res.status(404).json({
-            error : ' no corresponding post found'
-        })
-    }
+    myPost.data.splice(postIndex, 1);
 
-    const newPost = myPost.filter(post => post.slug.toLowerCase() !== req.params.slug.toLowerCase())
 
-    fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`)
+    fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`);
 
-    res.json({
-        status : 200,
-        data : newPost
-    })
 
-}
+    res.json({ status: 200, message: 'Post deleted successfully' });
+};
+
 
 module.exports = {
     store,
