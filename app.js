@@ -21,8 +21,8 @@ app.use(express.json());
 
 
 app.use('/', myRoutes);
-
 app.use(notFoundMiddleware)
+
 
 
 app.listen(3004, () => {

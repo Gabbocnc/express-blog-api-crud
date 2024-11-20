@@ -56,6 +56,7 @@ const destroy = (req, res) => {
     res.json({
         status: 200,
         message: 'Post deleted successfully',
+        data: myPost.data
     });
 };
 
