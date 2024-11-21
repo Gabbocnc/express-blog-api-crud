@@ -10,7 +10,7 @@ const store = (req, res) => {
     fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`)
 
     res.json({
-        Post: newPost
+        data: myPost
     })
 }
 
@@ -45,9 +45,9 @@ const destroy = (req, res) => {
     const slugToDelete = req.params.slug.toLowerCase();
     console.log(slugToDelete);
 
-    const postIndex = myPost.data.findIndex(post => post.slug.toLowerCase() === slugToDelete);
+    const postIndex = myPost.find(post => post.slug.toLowerCase() === slugToDelete);
 
-    myPost.data.splice(postIndex, 1);
+    myPost.splice(myPost.indexOf(postIndex), 1);
 
 
     fs.writeFileSync('./database/db.js', `module.exports = ${JSON.stringify(myPost, null, 4)}`);
@@ -56,7 +56,7 @@ const destroy = (req, res) => {
     res.json({
         status: 200,
         message: 'Post deleted successfully',
-        data: myPost.data
+        data: myPost
     });
 };
 
